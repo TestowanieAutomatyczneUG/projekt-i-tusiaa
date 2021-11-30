@@ -3,8 +3,10 @@ from src.grade import *
 
 class PasswordTest(unittest.TestCase):
 
-    def test_grade_init(self):
+    def setUp(self):
         self.temp = grade(5, 5)
+
+    def test_grade_init(self):
         self.assertNotEqual(self.temp, None)
 
     def test_grade_init_grade_to_big(self):
@@ -122,5 +124,8 @@ class PasswordTest(unittest.TestCase):
     def test_grade_init_grade_object_scale_object(self):
         with self.assertRaises(ValueError):
             grade({"grade": 5}, {"scale": 5})
+
+    def test_grade_get_grade(self):
+        self.assertEqual(self.temp.get_grade(), 5)
 
     
