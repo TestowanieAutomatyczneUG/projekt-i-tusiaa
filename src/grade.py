@@ -22,4 +22,10 @@ class grade:
         return self.scale
 
     def set_grade(self, grade: int) -> None:
+        if type(grade) is not int:
+            raise ValueError("Grade must be an integer")
+        if(grade > 6):
+            raise ValueError("Grade cannot be greater than 6")
+        if(grade < 1):
+            raise ValueError("Grade cannot be less than 1")
         self.grade = grade
