@@ -1,10 +1,10 @@
 class grade:
     def __init__(self, grade: int, scale: int) -> None:
         if type(grade) is not int:
-            if not (type(grade) is str and grade.isdigit() is True):
+            if not (type(grade) is str and grade.isdigit() is True) and not (type(grade) is float and grade.is_integer() is True):
                 raise ValueError("Grade must be an integer")
         if type(scale) is not int:
-            if not (type(scale) is str and scale.isdigit() is True):
+            if not (type(scale) is str and scale.isdigit() is True) and not (type(scale) is float and scale.is_integer() is True):
                 raise ValueError("Scale must be an integer")
         grade = int(grade)
         scale = int(scale)
