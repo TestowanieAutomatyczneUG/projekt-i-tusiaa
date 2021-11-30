@@ -1,4 +1,4 @@
-from subject import *
+from src.subject import *
 
 class student:
     def __init__(self, name: str, surname: str) -> None:
