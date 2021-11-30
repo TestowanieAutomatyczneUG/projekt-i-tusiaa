@@ -38,7 +38,9 @@ class grade:
 
     def set_scale(self, scale: int) -> None:
         if type(scale) is not int:
-            raise ValueError("Scale must be an integer")
+            if not (type(scale) is str and scale.isdigit() is True) and not (type(scale) is float and scale.is_integer() is True):
+                raise ValueError("Scale must be an integer")
+        scale = int(scale)
         if(scale > 10):
             raise ValueError("Scale cannot be greater than 10")
         if(scale < 1):
