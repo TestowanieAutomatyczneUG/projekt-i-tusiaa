@@ -14,3 +14,6 @@ class grade:
             raise ValueError("Scale cannot be less than 1")
         self.grade = grade
         self.scale = scale
+
+    def get_grade(self) -> int:
+        return self.grade
