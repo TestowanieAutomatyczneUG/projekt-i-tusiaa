@@ -20,3 +20,6 @@ class grade:
 
     def get_scale(self) -> int:
         return self.scale
+
+    def set_grade(self, grade: int) -> None:
+        self.grade = grade
