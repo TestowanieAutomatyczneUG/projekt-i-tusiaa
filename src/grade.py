@@ -17,3 +17,6 @@ class grade:
 
     def get_grade(self) -> int:
         return self.grade
+
+    def get_scale(self) -> int:
+        return self.scale
