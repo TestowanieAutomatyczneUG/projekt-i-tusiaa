@@ -29,3 +29,6 @@ class grade:
         if(grade < 1):
             raise ValueError("Grade cannot be less than 1")
         self.grade = grade
+
+    def set_scale(self, scale: int) -> None:
+        self.scale = scale
