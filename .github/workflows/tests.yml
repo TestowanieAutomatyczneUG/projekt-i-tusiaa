@@ -29,10 +29,4 @@ jobs:
       - name: Run tests for register
         run: nose2 tests.tests_register
         
-      - name: Run tests with coverage
-        run: |
-          coverage run -m unittest
-          coveralls
-
-        
 
