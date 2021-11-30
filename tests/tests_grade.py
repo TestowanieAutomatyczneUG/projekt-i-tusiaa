@@ -171,6 +171,8 @@ class PasswordTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.temp.set_grade({"grade": 5})
 
-    
+    def test_grade_set_scale(self):
+        self.temp.set_scale(6)
+        self.assertEqual(self.temp.get_scale(), 6)
 
     
