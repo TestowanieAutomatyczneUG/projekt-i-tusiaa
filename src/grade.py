@@ -27,7 +27,9 @@ class grade:
 
     def set_grade(self, grade: int) -> None:
         if type(grade) is not int:
-            raise ValueError("Grade must be an integer")
+            if not (type(grade) is str and grade.isdigit() is True) and not (type(grade) is float and grade.is_integer() is True):
+                raise ValueError("Grade must be an integer")
+        grade = int(grade)
         if(grade > 6):
             raise ValueError("Grade cannot be greater than 6")
         if(grade < 1):
