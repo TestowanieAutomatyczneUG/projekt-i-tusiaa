@@ -1,3 +1,5 @@
+from subject import *
+
 class student:
     def __init__(self, name: str, surname: str) -> None:
         self.subjects = []
