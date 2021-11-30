@@ -18,3 +18,7 @@ class PasswordTest(unittest.TestCase):
     def test_register_init_scale_to_big(self):
         with self.assertRaises(ValueError):
             grade(5, 20)
+
+    def test_register_init_scale_to_small(self):
+        with self.assertRaises(ValueError):
+            grade(5, -1)
