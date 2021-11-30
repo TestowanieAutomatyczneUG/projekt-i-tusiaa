@@ -6,5 +6,7 @@ class grade:
             raise ValueError("Grade cannot be less than 1")
         if(scale > 10):
             raise ValueError("Scale cannot be greater than 10")
+        if(scale < 1):
+            raise ValueError("Scale cannot be less than 1")
         self.grade = grade
         self.scale = scale
