@@ -135,4 +135,42 @@ class PasswordTest(unittest.TestCase):
         self.temp.set_grade(6)
         self.assertEqual(self.temp.get_grade(), 6)
 
+    def test_grade_set_grade_to_big(self):
+        with self.assertRaises(ValueError):
+            self.temp.set_grade(10)
+
+    def test_grade_set_grade_to_small(self):
+        with self.assertRaises(ValueError):
+            self.temp.set_grade(-1)
+
+    def test_grade_set_grade_string(self):
+        with self.assertRaises(ValueError):
+            self.temp.set_grade("5")
+
+    def test_grade_set_grade_float(self):
+        with self.assertRaises(ValueError):
+            self.temp.set_grade(5.5)
+
+    def test_grade_set_grade_bool(self):
+        with self.assertRaises(ValueError):
+            self.temp.set_grade(True)
+
+    def test_grade_set_grade_None(self):    
+        with self.assertRaises(ValueError):
+            self.temp.set_grade(None)
+
+    def test_grade_set_grade_empty(self):
+        with self.assertRaises(ValueError):
+            self.temp.set_grade("")
+
+    def test_grade_set_grade_array(self):
+        with self.assertRaises(ValueError):
+            self.temp.set_grade([1, 2, 3])
+
+    def test_grade_set_grade_object(self):
+        with self.assertRaises(ValueError):
+            self.temp.set_grade({"grade": 5})
+
+    
+
     
