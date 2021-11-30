@@ -62,6 +62,15 @@ class PasswordTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             grade("grade", "scale")
 
+    def test_grade_init_grade_right_float(self):
+        self.assertNotEqual(grade(5.0, 5), None)
+
+    def test_grade_init_scale_right_float(self):
+        self.assertNotEqual(grade(5, 5.0), None)
+
+    def test_grade_init_grade_right_float_scale_right_float(self):
+        self.assertNotEqual(grade(5.0, 5.0), None)
+
     def test_grade_init_grade_float(self):
         with self.assertRaises(ValueError):
             grade(5.5, 5)
