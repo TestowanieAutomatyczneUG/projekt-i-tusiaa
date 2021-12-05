@@ -18,10 +18,17 @@ class SubjectTest(unittest.TestCase):
         self.temp = subject("Matematyka")
 
     def test_subject_init(self):
-        self.assertNotEqual(self.temp, None)
+        assert_that(self.temp).is_not_none()
 
     def test_subject_init_wrong_name(self):
         assert_that(self.temp.__init__).raises(self.error).when_called_with(self.value)
+
+    def test_subject_set_name(self):
+        self.temp.set_name("Informatyka")
+        assert_that(self.temp.name).is_equal_to("Informatyka")
+
+    def test_subject_set_name_wrong(self):
+        assert_that(self.temp.set_name).raises(self.error).when_called_with(self.value)
 
     def test_subject_mean_from_file(self):
       fileTest = open("data/Grades_Sample")
