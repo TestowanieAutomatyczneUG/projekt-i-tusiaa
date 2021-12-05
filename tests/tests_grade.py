@@ -245,6 +245,7 @@ class GradeTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.temp.set_scale({"scale": 5})
 
-    
+    def tearDown(self):
+        del self.temp
 
     
