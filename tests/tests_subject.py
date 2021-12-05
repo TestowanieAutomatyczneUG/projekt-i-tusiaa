@@ -1,7 +1,17 @@
 import unittest
 from parameterized import parameterized, parameterized_class
-import assertpy
+from assertpy import assert_that
 from src.subject import *
+
+@parameterized_class(('value', 'error'), [
+    (1, ValueError),
+    (1.5, ValueError),
+    (True, ValueError),
+    (None, ValueError),
+    ("", ValueError),
+    ([1,2,3], ValueError),
+    ({'name': 2, 'grades': 4}, ValueError),
+])
 
 class SubjectTest(unittest.TestCase):
     def setUp(self):
@@ -9,6 +19,9 @@ class SubjectTest(unittest.TestCase):
 
     def test_subject_init(self):
         self.assertNotEqual(self.temp, None)
+
+    def test_subject_init_wrong_name(self):
+        assert_that(self.temp.__init__).raises(self.error).when_called_with(self.value)
 
     def test_subject_mean_from_file(self):
       fileTest = open("data/Grades_Sample")
@@ -19,13 +32,12 @@ class SubjectTest(unittest.TestCase):
         else:
             data = line.split(" ")
             if data[1] is not None:
-                self.temp.add_grade(data[0], data[1])
+                self.temp.add_grade(data[0], data[1].strip("\n"))
             else:
-                mean = data[0]
+                mean = data[0].strip("\n")
                 self.assertEqual(self.temp.mean(), mean)
-
       fileTest.close()
 
 
-      def tearDown(self):
+    def tearDown(self):
         del self.temp
