@@ -1,10 +1,14 @@
 import unittest
-import parameterized
+from parameterized import parameterized, parameterized_class
+import assertpy
 from src.subject import *
 
 class SubjectTest(unittest.TestCase):
     def setUp(self):
         self.temp = subject("Matematyka")
+
+    def test_subject_init(self):
+        self.assertNotEqual(self.temp, None)
 
     def test_subject_mean_from_file(self):
       fileTest = open("data/Grades_Sample")
@@ -21,3 +25,7 @@ class SubjectTest(unittest.TestCase):
                 self.assertEqual(self.temp.mean(), mean)
 
       fileTest.close()
+
+
+      def tearDown(self):
+        del self.temp
