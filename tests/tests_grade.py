@@ -1,7 +1,7 @@
 import unittest
 from src.grade import *
 
-class PasswordTest(unittest.TestCase):
+class GradeTest(unittest.TestCase):
 
     def setUp(self):
         self.temp = grade(5, 5)
