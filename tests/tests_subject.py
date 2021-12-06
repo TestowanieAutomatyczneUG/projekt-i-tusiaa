@@ -16,6 +16,18 @@ from src.subject import *
 class SubjectTest(unittest.TestCase):
     def setUp(self):
         self.temp = subject("Matematyka")
+    
+    @parameterized.expand([
+        ("grade", ValueError),
+        ("", ValueError),
+        (0, ValueError),
+        (25, ValueError),
+        (1.5, ValueError),
+        (True, ValueError),
+        (None, ValueError),
+        ([1,2,3], ValueError),
+        ({grade: 1}, ValueError),
+    ])
 
     def test_subject_init(self):
         assert_that(self.temp).is_not_none()
@@ -42,16 +54,6 @@ class SubjectTest(unittest.TestCase):
         self.temp.add_grade(AddedGrade)
         assert_that(self.temp.grades).contains(AddedGrade)
 
-    @parameterized.expand([
-        ("grade", ValueError),
-        ("", ValueError),
-        (1, ValueError),
-        (1.5, ValueError),
-        (True, ValueError),
-        (None, ValueError),
-        ([1,2,3], ValueError),
-        ({grade: 1}, ValueError),
-    ])
     def test_subject_add_grade_wrong(self, value, error):
         assert_that(self.temp.add_grade).raises(error).when_called_with(value)
 
@@ -62,31 +64,9 @@ class SubjectTest(unittest.TestCase):
     def test_subject_find_grade_false(self):
         assert_that(self.temp.find_grade("1", "2")).is_none()
 
-    @parameterized.expand([
-        ("grade", ValueError),
-        ("", ValueError),
-        (0, ValueError),
-        (10, ValueError),
-        (1.5, ValueError),
-        (True, ValueError),
-        (None, ValueError),
-        ([1,2,3], ValueError),
-        ({grade: 1}, ValueError),
-    ])
     def test_subject_find_grade_wrong_grade(self, value, error):
         assert_that(self.temp.find_grade).raises(error).when_called_with(value, 10)
 
-    @parameterized.expand([
-        ("grade", ValueError),
-        ("", ValueError),
-        (0, ValueError),
-        (25, ValueError),
-        (1.5, ValueError),
-        (True, ValueError),
-        (None, ValueError),
-        ([1,2,3], ValueError),
-        ({grade: 1}, ValueError),
-    ])
     def test_subject_find_grade_wrong_scale(self, value, error):
         assert_that(self.temp.find_grade).raises(error).when_called_with(5, value)
 
@@ -109,6 +89,21 @@ class SubjectTest(unittest.TestCase):
 
     def test_subject_mean_without_grades(self):
         assert_that(self.temp.mean()).is_zero()
+
+    def test_subject_delete_grade(self):
+        self.temp.add_grade(grade("1", "2"))
+        self.temp.delete_grade("1", "2")
+        assert_that(self.temp.find_grade("1", "2")).is_none()
+
+    def test_subject_delete_grade_without_grade(self):
+        self.temp.delete_grade(1, 2)
+        assert_that(self.temp.find_grade(1, 2)).is_none()
+
+    def test_subject_delete_grade_wrong_grade(self, value, error):
+        assert_that(self.temp.delete_grade).raises(error).when_called_with(value, 5)
+
+    def test_subject_delete_grade_wrong_scale(self, value, error):
+        assert_that(self.temp.delete_grade).raises(error).when_called_with(1, value)
 
     def test_subject_mean_with_grades(self):
         self.temp.add_grade(grade("1", "2"))
