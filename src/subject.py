@@ -2,6 +2,8 @@ from src.grade import *
 
 class subject:
     def __init__(self, name: str):
+        if not name or type(name) != str:
+            raise ValueError("Name must be a string")
         self.name = name
         self.grades = []
 
@@ -12,6 +14,8 @@ class subject:
         return self.grades
 
     def set_name(self, name: str):
+        if not name or type(name) != str:
+            raise ValueError("Name must be a string")
         self.name = name
 
     def add_grade(self, grade: grade):
