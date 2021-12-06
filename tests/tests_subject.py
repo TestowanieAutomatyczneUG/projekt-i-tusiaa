@@ -55,6 +55,13 @@ class SubjectTest(unittest.TestCase):
     def test_subject_add_grade_wrong(self, value, error):
         assert_that(self.temp.add_grade).raises(error).when_called_with(value)
 
+    def test_subject_find_grade_true(self):
+        self.temp.add_grade(grade("1", "2"))
+        assert_that(self.temp.find_grade("1", "2")).is_instance_of(grade)
+
+    def test_subject_find_grade_false(self):
+        assert_that(self.temp.find_grade("1", "2")).is_none()
+
     def test_subject_mean_from_file(self):
       fileTest = open("data/Grades_Sample")
       fileTest.read()
