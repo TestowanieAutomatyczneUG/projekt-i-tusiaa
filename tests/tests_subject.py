@@ -30,6 +30,24 @@ class SubjectTest(unittest.TestCase):
     def test_subject_set_name_wrong(self):
         assert_that(self.temp.set_name).raises(self.error).when_called_with(self.value)
 
+    def test_subject_add_grade(self):
+        AddedGrade = grade("1", "2")
+        self.temp.add_grade(AddedGrade)
+        assert_that(self.temp.grades).contains(AddedGrade)
+
+    @parameterized.expand([
+        ("grade", ValueError),
+        ("", ValueError),
+        (1, ValueError),
+        (1.5, ValueError),
+        (True, ValueError),
+        (None, ValueError),
+        ([1,2,3], ValueError),
+        ({grade: 1}, ValueError),
+    ])
+    def test_subject_add_grade_wrong(self, value, error):
+        assert_that(self.temp.add_grade).raises(error).when_called_with(value)
+
     def test_subject_mean_from_file(self):
       fileTest = open("data/Grades_Sample")
       fileTest.read()
@@ -39,7 +57,7 @@ class SubjectTest(unittest.TestCase):
         else:
             data = line.split(" ")
             if data[1] is not None:
-                self.temp.add_grade(data[0], data[1].strip("\n"))
+                self.temp.add_grade(grade(data[0], data[1].strip("\n")))
             else:
                 mean = data[0].strip("\n")
                 self.assertEqual(self.temp.mean(), mean)
