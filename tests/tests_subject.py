@@ -3,7 +3,16 @@ from parameterized import parameterized, parameterized_class
 from assertpy import assert_that
 from src.subject import *
 
-@parameterized_class(('value', 'error'), [
+@parameterized_class(('namevalue', 'error'), [
+    (1, ValueError),
+    (1.5, ValueError),
+    (True, ValueError),
+    (None, ValueError),
+    ("", ValueError),
+    ([1,2,3], ValueError),
+    ({'name': 2, 'grades': 4}, ValueError),
+])
+@parameterized_class(('gradevalue', 'error'), [
     (1, ValueError),
     (1.5, ValueError),
     (True, ValueError),
@@ -21,14 +30,14 @@ class SubjectTest(unittest.TestCase):
         assert_that(self.temp).is_not_none()
 
     def test_subject_init_wrong_name(self):
-        assert_that(self.temp.__init__).raises(self.error).when_called_with(self.value)
+        assert_that(self.temp.__init__).raises(self.error).when_called_with(self.namevalue)
 
     def test_subject_set_name(self):
         self.temp.set_name("Informatyka")
         assert_that(self.temp.name).is_equal_to("Informatyka")
 
     def test_subject_set_name_wrong(self):
-        assert_that(self.temp.set_name).raises(self.error).when_called_with(self.value)
+        assert_that(self.temp.set_name).raises(self.error).when_called_with(self.namevalue)
 
     def test_subject_get_name(self):
         assert_that(self.temp.get_name()).is_equal_to("Matematyka")
@@ -61,6 +70,12 @@ class SubjectTest(unittest.TestCase):
 
     def test_subject_find_grade_false(self):
         assert_that(self.temp.find_grade("1", "2")).is_none()
+
+    def test_subject_find_grade_wrong_grade(self):
+        assert_that(self.temp.find_grade).raises(self.error).when_called_with(self.gradevalue, 10)
+
+    def test_subject_find_grade_wrong_scale(self):
+        assert_that(self.temp.find_grade).raises(self.error).when_called_with(5, self.gradevalue)
 
     def test_subject_mean_from_file(self):
       fileTest = open("data/Grades_Sample")
