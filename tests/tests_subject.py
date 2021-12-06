@@ -1,5 +1,5 @@
 import unittest
-from parameterized import parameterized, parameterized_class
+from parameterized import parameterized_class
 from assertpy import assert_that
 from src.subject import *
 
