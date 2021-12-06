@@ -107,6 +107,15 @@ class SubjectTest(unittest.TestCase):
         self.temp.change_grade(1, 2, 3, 4)
         assert_that(self.temp.find_grade(3, 4)).is_none()
 
+    def test_subject_mean_without_grades(self):
+        assert_that(self.temp.mean()).is_zero()
+
+    def test_subject_mean_with_grades(self):
+        self.temp.add_grade(grade("1", "2"))
+        self.temp.add_grade(grade("3", "1"))
+        self.temp.add_grade(grade("5", "6"))
+        assert_that(self.temp.mean()).is_close_to(3.9, 0.1)
+
     def test_subject_mean_from_file(self):
       fileTest = open("data/Grades_Sample")
       fileTest.read()
@@ -119,7 +128,7 @@ class SubjectTest(unittest.TestCase):
                 self.temp.add_grade(grade(data[0], data[1].strip("\n")))
             else:
                 mean = data[0].strip("\n")
-                self.assertEqual(self.temp.mean(), mean)
+                assert_that(self.temp.mean()).is_close_to(float(mean), 0.1)
       fileTest.close()
 
 
