@@ -18,8 +18,10 @@ class subject:
             raise ValueError("Name must be a string")
         self.name = name
 
-    def add_grade(self, grade: grade):
-        self.grades.append(grade)
+    def add_grade(self, Grade: grade):
+        if not isinstance(Grade, grade):
+            raise ValueError("Grade must be a grade")
+        self.grades.append(Grade)
 
     def find_grade(self, grade: int, scale: int):
         for i in self.grades:
