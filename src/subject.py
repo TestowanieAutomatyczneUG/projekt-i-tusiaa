@@ -24,18 +24,32 @@ class subject:
         self.grades.append(Grade)
 
     def find_grade(self, grade: int, scale: int):
+        if type(grade) is not int:
+            if not (type(grade) is str and grade.isdigit() is True) and not (type(grade) is float and grade.is_integer() is True):
+                raise ValueError("Grade must be an integer")
+        if type(scale) is not int:
+            if not (type(scale) is str and scale.isdigit() is True) and not (type(scale) is float and scale.is_integer() is True):
+                raise ValueError("Scale must be an integer")
+        grade = int(grade)
+        scale = int(scale)
+        if grade > 6 or grade < 1:
+            raise ValueError("Grade cannot be greater than 6 or less than 1")
+        if scale > 10 or scale < 1:
+            raise ValueError("Scale cannot be greater than 10 or less than 1")
         for i in self.grades:
             if i.get_grade() == grade and i.get_scale() == scale:
                 return i
 
     def change_grade(self, grade: int, scale: int, new_grade: int, new_scale: int):
-        if self.find_grade(grade, scale) is not None:
-            self.find_grade(grade, scale).set_grade(new_grade)
-            self.find_grade(grade, scale).set_scale(new_scale)
+        Grade = self.find_grade(grade, scale)
+        if Grade is not None:
+            Grade.set_grade(new_grade)
+            Grade.set_scale(new_scale)
 
     def delete_grade(self, grade: int, scale: int):
-        if self.find_grade(grade, scale) is not None:
-            self.grades.remove(self.find_grade(grade, scale))
+        Grade = self.find_grade(grade, scale)
+        if Grade is not None:
+            self.grades.remove(Grade)
 
     def mean(self):
         sum = 0
