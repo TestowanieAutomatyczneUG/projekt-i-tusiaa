@@ -30,6 +30,13 @@ class SubjectTest(unittest.TestCase):
     def test_subject_set_name_wrong(self):
         assert_that(self.temp.set_name).raises(self.error).when_called_with(self.value)
 
+    def test_subject_get_name(self):
+        assert_that(self.temp.get_name()).is_equal_to("Matematyka")
+
+    def test_subject_get_grades(self):
+        self.temp.add_grade(grade("1", "2"))
+        assert_that(self.temp.get_grades()).is_length(1)
+
     def test_subject_add_grade(self):
         AddedGrade = grade("1", "2")
         self.temp.add_grade(AddedGrade)
