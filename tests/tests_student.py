@@ -41,6 +41,9 @@ class StudentParamerizedTest1(unittest.TestCase):
     def test_student_delete_subject_wrong(self):
         assert_that(calling(self.tmp.delete_subject).with_args(self.value), raises(self.error))
 
+    def test_student_find_subject_wrong(self):
+        assert_that(calling(self.tmp.find_subject).with_args(self.value), raises(self.error))
+
     def tearDown(self):
         del self.temp
 
@@ -146,19 +149,24 @@ class StudentTest(unittest.TestCase):
         Subject= subject("Matematyka")
         self.temp.add_subject(Subject)
         self.temp.delete_subject(Subject)
-        assert_that(self.temp.get_subjects(), not(contains(Subject)))
+        assert_that(Subject, is_in(self.temp.get_subjects()))
 
     def test_student_delete_subject_by_name(self):
         self.temp.add_subject("Matematyka")
         self.temp.delete_subject("Matematyka")
         assert_that(calling(self.temp.find_subject).with_args("Matematyka"), none())
 
-    def test_student_delete_subject_not_exists(self):
+    def test_student_delete_subject_do_not_exists(self):
         Subject= subject("Matematyka")
         self.temp.delete_subject(Subject)
         assert_that(calling(self.temp.find_subject).with_args("Matematyka"), none())
 
+    def test_student_find_subject(self):
+        self.temp.add_subject("Matematyka")
+        assert_that(self.temp.find_subject("Matematyka"), instance_of(subject))
 
+    def test_student_find_subject_do_not_exists(self):
+        assert_that(calling(self.temp.find_subject).with_args("Matematyka"), none())
 
     
     def tearDown(self):
