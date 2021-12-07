@@ -24,25 +24,29 @@ class StudentParamerizedTest1(unittest.TestCase):
         assert_that(calling(student).with_args("Jan", self.value, "96032687885"), raises(self.error))
 
     def test_student_set_name_wrong(self):
-        assert_that(calling(self.tmp.set_name).with_args(self.value), raises(self.error))
+        assert_that(calling(self.temp.set_name).with_args(self.value), raises(self.error))
 
     def test_student_set_surname_wrong(self):
-        assert_that(calling(self.tmp.set_surname).with_args(self.value), raises(self.error))
+        assert_that(calling(self.temp.set_surname).with_args(self.value), raises(self.error))
 
     def test_student_add_remark_wrong(self):
-        assert_that(calling(self.tmp.add_remark).with_args(self.value), raises(self.error))
+        assert_that(calling(self.temp.add_remark).with_args(self.value), raises(self.error))
 
     def test_student_delete_remark_wrong(self):
-        assert_that(calling(self.tmp.delete_remark).with_args(self.value), raises(self.error))
+        assert_that(calling(self.temp.delete_remark).with_args(self.value), raises(self.error))
+
+    def test_student_change_remark_wrong(self):
+        self.temp.add_remark("Test")
+        assert_that(calling(self.temp.change_remark).with_args(self.value), raises(self.error))    
 
     def test_student_add_subject_wrong(self):
-        assert_that(calling(self.tmp.add_subject).with_args(self.value), raises(self.error))
+        assert_that(calling(self.temp.add_subject).with_args(self.value), raises(self.error))
 
     def test_student_delete_subject_wrong(self):
-        assert_that(calling(self.tmp.delete_subject).with_args(self.value), raises(self.error))
+        assert_that(calling(self.temp.delete_subject).with_args(self.value), raises(self.error))
 
     def test_student_find_subject_wrong(self):
-        assert_that(calling(self.tmp.find_subject).with_args(self.value), raises(self.error))
+        assert_that(calling(self.temp.find_subject).with_args(self.value), raises(self.error))
 
     def tearDown(self):
         del self.temp
@@ -127,6 +131,15 @@ class StudentTest(unittest.TestCase):
     def test_student_delete_remark_without_remark(self):
         self.temp.delete_remark("Test")
         assert_that(self.temp.get_remarks(), empty())
+
+    def test_student_change_remark(self):
+        self.temp.add_remark("Test")
+        self.temp.change_remark("Test", "Test2")
+        assert_that(self.temp.get_remarks(), has_item("Test2"))
+
+    def test_student_change_remark_without_remark(self):
+        self.temp.change_remark("Test", "Test2")
+        assert_that(self.temp.get_remarks(), not(contains("Test")))
 
     def test_student_add_subject(self):
         Subject= subject("Matematyka")
