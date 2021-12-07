@@ -77,7 +77,11 @@ class StudentTest(unittest.TestCase):
     def test_set_pesel(self):
         self.temp.set_pesel("03241311845")
         assert_that(self.temp.get_pesel(), is_(IsValidPesel()))
-        
+
+    def test_set_pesel_int(self):
+        self.temp.set_pesel(94071449639)
+        assert_that(self.temp.get_pesel(), is_(IsValidPesel()))
+
     @parameterized.expand([
         ("", ValueError),
         ("123456789", ValueError),
