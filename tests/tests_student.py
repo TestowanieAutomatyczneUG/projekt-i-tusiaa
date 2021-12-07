@@ -14,25 +14,25 @@ from src.Pesel_matcher import *
     ({'name': 2, 'grades': 4}, ValueError),
 ])
 class StudentParamerizedTest1(unittest.TestCase):
-    def test_subject_init_wrong_name(self):
+    def test_student_init_wrong_name(self):
         assert_that(calling(student).with_args(self.value, "Kowalski", "96032687885"), raises(self.error))
 
-    def test_subject_init_wrong_surname(self):
+    def test_student_init_wrong_surname(self):
         assert_that(calling(student).with_args("Jan", self.value, "96032687885"), raises(self.error))
 
-    def test_subject_set_name_wrong(self):
+    def test_student_set_name_wrong(self):
         self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.set_name).with_args(self.value), raises(self.error))
 
-    def test_subject_set_surname_wrong(self):
+    def test_student_set_surname_wrong(self):
         self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.set_surname).with_args(self.value), raises(self.error))
 
-    def test_subject_add_remark_wrong(self):
+    def test_student_add_remark_wrong(self):
         self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.add_remark).with_args(self.value), raises(self.error))
 
-    def test_subject_delete_remark_wrong(self):
+    def test_student_delete_remark_wrong(self):
         self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.delete_remark).with_args(self.value), raises(self.error))
 
@@ -74,19 +74,19 @@ class StudentTest(unittest.TestCase):
     def test_student_get_subjects(self):
         assert_that(self.temp.get_subjects(), instance_of(list))
 
-    def test_set_name(self):
+    def test_student_set_name(self):
         self.temp.set_name("Janusz")
         assert_that(self.temp.get_name(), equal_to("Janusz"))
 
-    def test_set_surname(self):
+    def test_student_set_surname(self):
         self.temp.set_surname("Nowak")
         assert_that(self.temp.get_surname(), equal_to("Nowak"))
 
-    def test_set_pesel(self):
+    def test_student_set_pesel(self):
         self.temp.set_pesel("03241311845")
         assert_that(self.temp.get_pesel(), is_(IsValidPesel()))
 
-    def test_set_pesel_int(self):
+    def test_student_set_pesel_int(self):
         self.temp.set_pesel(94071449639)
         assert_that(self.temp.get_pesel(), is_(IsValidPesel()))
 
@@ -118,7 +118,6 @@ class StudentTest(unittest.TestCase):
         self.temp.delete_remark("Test")
         assert_that(self.temp.get_remarks(), empty())
 
-    
 
 
 
