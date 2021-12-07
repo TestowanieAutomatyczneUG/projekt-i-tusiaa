@@ -14,6 +14,9 @@ from src.Pesel_matcher import *
     ({'name': 2, 'grades': 4}, ValueError),
 ])
 class StudentParamerizedTest1(unittest.TestCase):
+    def setUp(self):
+        self.temp = student("Jan", "Kowalski", "96032687885")
+
     def test_student_init_wrong_name(self):
         assert_that(calling(student).with_args(self.value, "Kowalski", "96032687885"), raises(self.error))
 
@@ -21,25 +24,22 @@ class StudentParamerizedTest1(unittest.TestCase):
         assert_that(calling(student).with_args("Jan", self.value, "96032687885"), raises(self.error))
 
     def test_student_set_name_wrong(self):
-        self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.set_name).with_args(self.value), raises(self.error))
 
     def test_student_set_surname_wrong(self):
-        self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.set_surname).with_args(self.value), raises(self.error))
 
     def test_student_add_remark_wrong(self):
-        self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.add_remark).with_args(self.value), raises(self.error))
 
     def test_student_delete_remark_wrong(self):
-        self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.delete_remark).with_args(self.value), raises(self.error))
 
     def test_student_add_subject_wrong(self):
-        self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.add_subject).with_args(self.value), raises(self.error))
 
+    def tearDown(self):
+        del self.temp
 
 class StudentTest(unittest.TestCase):
     def setUp(self):
