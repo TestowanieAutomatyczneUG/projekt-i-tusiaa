@@ -131,6 +131,14 @@ class StudentTest(unittest.TestCase):
         self.temp.add_subject("Matematyka")
         assert_that(calling(self.temp.find_subject).with_args("Matematyka"), not_none())
 
+    def test_student_add_subject_already_exists(self):
+        self.temp.add_subject("Matematyka")
+        assert_that(calling(self.temp.add_subject).with_args("Matematyka"), raises(ValueError))
+
+    def test_student_add_subject_already_exists_small_big_letters(self):
+        self.temp.add_subject("Matematyka")
+        assert_that(calling(self.temp.add_subject).with_args("mAtematyka"), raises(ValueError))
+
 
 
     
