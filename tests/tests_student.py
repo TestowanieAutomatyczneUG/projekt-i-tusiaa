@@ -28,6 +28,10 @@ class StudentParamerizedTest1(unittest.TestCase):
         self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.set_surname).with_args(self.value), raises(self.error))
 
+    def test_subject_add_remark_wrong(self):
+        self.tmp = student("Jan", "Kowalski", "96032687885")
+        assert_that(calling(self.tmp.add_remark).with_args(self.value), raises(self.error))
+
 
 class StudentTest(unittest.TestCase):
     def setUp(self):
@@ -96,6 +100,10 @@ class StudentTest(unittest.TestCase):
     ])
     def test_student_set_pesel_wrong(self, pesel, error):
         assert_that(calling(self.temp.set_pesel).with_args(pesel), raises(error))
+
+    def test_student_add_remark(self):
+        self.temp.add_remark("Test")
+        assert_that(self.temp.get_remarks(), has_item("Test"))
 
 
 
