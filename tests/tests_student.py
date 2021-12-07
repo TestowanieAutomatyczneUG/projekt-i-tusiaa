@@ -38,6 +38,9 @@ class StudentParamerizedTest1(unittest.TestCase):
     def test_student_add_subject_wrong(self):
         assert_that(calling(self.tmp.add_subject).with_args(self.value), raises(self.error))
 
+    def test_student_delete_subject_wrong(self):
+        assert_that(calling(self.tmp.delete_subject).with_args(self.value), raises(self.error))
+
     def tearDown(self):
         del self.temp
 
@@ -138,6 +141,22 @@ class StudentTest(unittest.TestCase):
     def test_student_add_subject_already_exists_small_big_letters(self):
         self.temp.add_subject("Matematyka")
         assert_that(calling(self.temp.add_subject).with_args("mAtematyka"), raises(ValueError))
+
+    def test_student_delete_subject(self):
+        Subject= subject("Matematyka")
+        self.temp.add_subject(Subject)
+        self.temp.delete_subject(Subject)
+        assert_that(self.temp.get_subjects(), not(contains(Subject)))
+
+    def test_student_delete_subject_by_name(self):
+        self.temp.add_subject("Matematyka")
+        self.temp.delete_subject("Matematyka")
+        assert_that(calling(self.temp.find_subject).with_args("Matematyka"), none())
+
+    def test_student_delete_subject_not_exists(self):
+        Subject= subject("Matematyka")
+        self.temp.delete_subject(Subject)
+        assert_that(calling(self.temp.find_subject).with_args("Matematyka"), none())
 
 
 
