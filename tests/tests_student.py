@@ -36,6 +36,10 @@ class StudentParamerizedTest1(unittest.TestCase):
         self.tmp = student("Jan", "Kowalski", "96032687885")
         assert_that(calling(self.tmp.delete_remark).with_args(self.value), raises(self.error))
 
+    def test_student_add_subject_wrong(self):
+        self.tmp = student("Jan", "Kowalski", "96032687885")
+        assert_that(calling(self.tmp.add_subject).with_args(self.value), raises(self.error))
+
 
 class StudentTest(unittest.TestCase):
     def setUp(self):
@@ -118,6 +122,14 @@ class StudentTest(unittest.TestCase):
         self.temp.delete_remark("Test")
         assert_that(self.temp.get_remarks(), empty())
 
+    def test_student_add_subject(self):
+        Subject= subject("Matematyka")
+        self.temp.add_subject(Subject)
+        assert_that(self.temp.get_subjects(), has_item(Subject))
+
+    def test_student_add_subject_by_name(self):
+        self.temp.add_subject("Matematyka")
+        assert_that(calling(self.temp.find_subject).with_args("Matematyka"), not_none())
 
 
 
