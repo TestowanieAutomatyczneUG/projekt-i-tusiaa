@@ -1,3 +1,5 @@
+from hamcrest.core.base_matcher import BaseMatcher
+
 def pesel(pesel: str):
     if not isinstance(pesel, str):
         return False
@@ -26,3 +28,10 @@ def pesel(pesel: str):
         return False
 
     return True
+
+class IsValidPesel(BaseMatcher):
+    def _matches(self, item):
+        return pesel(item)
+
+    def describe_to(self, description):
+        description.append_text("Invalid pesel!")
