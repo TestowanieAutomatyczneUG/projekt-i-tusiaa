@@ -27,4 +27,32 @@ class register:
         for student in self.students:
             if student.pesel == Pesel:
                 return student
-        return None
+    
+    def find_by_name(self, name: str):
+        if not name or type(name) is not str:
+            raise ValueError("Invalid name")
+        students = []
+        for student in self.students:
+            if student.name == name:
+                students.append(student)
+        return students
+
+    def find_by_surname(self, surname: str):
+        if not surname or type(surname) is not str:
+            raise ValueError("Invalid surname")
+        students = []
+        for student in self.students:
+            if student.surname == surname:
+                students.append(student)
+        return students
+
+    def find_by_name_and_surname(self, name: str, surname: str):
+        if not name or type(name) is not str:
+            raise ValueError("Invalid name")
+        if not surname or type(surname) is not str:
+            raise ValueError("Invalid surname")
+        students = []
+        for student in self.students:
+            if student.name == name and student.surname == surname:
+                students.append(student)
+        return students
