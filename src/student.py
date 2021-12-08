@@ -49,5 +49,23 @@ class student:
         if not pesel(Pesel):
             raise ValueError("PESEL musi być poprawny")
         self.pesel = Pesel
+
+    def add_remark(self, remark: str):
+        if not remark or type(remark) is not str:
+            raise ValueError("Uwaga musi być napisem")
+        self.remarks.append(remark)
+
+    def delete_remark(self, remark: str):
+        if not remark or type(remark) is not str:
+            raise ValueError("Uwaga musi być napisem")
+        self.remarks.remove(remark)
+
+    def change_remark(self, old_remark: str, new_remark: str):
+        if not old_remark or type(old_remark) is not str:
+            raise ValueError("Uwaga musi być napisem")
+        if not new_remark or type(new_remark) is not str:
+            raise ValueError("Uwaga musi być napisem")
+        if old_remark in self.remarks:
+            self.remarks[self.remarks.index(old_remark)] = new_remark
         
         
