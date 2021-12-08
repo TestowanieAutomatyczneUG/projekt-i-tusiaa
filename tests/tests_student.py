@@ -199,7 +199,26 @@ class StudentTest(unittest.TestCase):
                 assert_that(self.temp.mean(), close_to(float(mean), 0.1))
       fileTest.close()
 
+    def test_student_mean(self):
+        self.temp.add_subject("Matematyka")
+        self.temp.find_subject("Matematyka").add_grade(grade(5, 4))
+        self.temp.find_subject("Matematyka").add_grade(grade(3, 8))
+        assert_that(self.temp.mean(), close_to(3.6, 0.1))
+
+    def test_student_mean_without_subjects(self):
+        assert_that(self.temp.mean(), less_than_or_equal_to(0))
+
+    def test_student_mean_without_grades(self):
+        self.temp.add_subject("Matematyka")
+        assert_that(self.temp.mean(), less_than_or_equal_to(0))
+
+    def test_student_mean_one_subject_without_grades(self):
+        self.temp.add_subject("Matematyka")
+        self.temp.find_subject("Matematyka").add_grade(grade(5, 4))
+        self.temp.find_subject("Matematyka").add_grade(grade(3, 4))
+        self.temp.add_subject("Informatyka")
+        assert_that(self.temp.mean(), close_to(float(4), 0.1))
+
     
     def tearDown(self):
         del self.temp
-        
