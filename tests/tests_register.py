@@ -34,6 +34,12 @@ class RegisterParamerizedTest1(unittest.TestCase):
     def test_register_find_students_by_name_and_surname_wrong_surname(self):
         assert_that(self.temp.find_students_by_name_and_surname).raises(self.error).when_called_with("Jan", self.value)
 
+    def test_register_change_student_name_wrong_name(self):
+        assert_that(self.temp.change_student_name).raises(self.error).when_called_with("96032687885", self.value)
+
+    def test_register_change_student_surname_wrong_surname(self):
+        assert_that(self.temp.change_student_surname).raises(self.error).when_called_with("96032687885", self.value)
+
     def tearDown(self):
         del self.temp
     
@@ -65,6 +71,18 @@ class RegisterParamerizedTest2(unittest.TestCase):
 
     def test_register_delete_student_wrong(self):
         assert_that(self.temp.delete_student).raises(self.error).when_called_with(self.value)
+
+    def test_register_change_student_name_wrong_pesel(self):
+        assert_that(self.temp.change_student_name).raises(self.error).when_called_with(self.value, "Jan")
+
+    def test_register_change_student_surname_wrong_pesel(self):
+        assert_that(self.temp.change_student_surname).raises(self.error).when_called_with(self.value, "Kowalski")
+
+    def test_register_change_student_pesel_wrong_old_pesel(self):
+        assert_that(self.temp.change_student_pesel).raises(self.error).when_called_with(self.value, "96032687885")
+    
+    def test_register_change_student_pesel_wrong_new_pesel(self):
+        assert_that(self.temp.change_student_pesel).raises(self.error).when_called_with("96032687885", self.value)
 
     def tearDown(self):
         del self.temp
@@ -146,6 +164,38 @@ class TestRegister(unittest.TestCase):
 
     def test_register_find_students_by_name_and_surname_not_found(self):
         assert_that(self.temp.find_students_by_name_and_surname("Jan", "Kowalski")).is_empty()
+
+    def test_register_change_student_name(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.change_student_name("96032687885", "Karol")
+        assert_that(self.temp.find_student_by_pesel("96032687885").get_name()).is_equal_to("Karol")
+
+    def test_register_change_student_name_not_found(self):
+        self.temp.change_student_name("96032687885", "Karol")
+        assert_that(self.temp.find_student_by_pesel("96032687885")).is_none()
+
+    def test_register_change_student_surname(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.change_student_surname("96032687885", "Nowak")
+        assert_that(self.temp.find_student_by_pesel("96032687885").get_surname()).is_equal_to("Nowak")
+
+    def test_register_change_student_surname_not_found(self):
+        self.temp.change_student_surname("96032687885", "Nowak")
+        assert_that(self.temp.find_student_by_pesel("96032687885")).is_none()
+
+    def test_register_change_student_pesel(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.change_student_pesel("96032687885", "03241311845")
+        assert_that(self.temp.find_student_by_pesel("03241311845")).is_not_none()
+
+    def test_register_change_student_pesel_not_found(self):
+        self.temp.change_student_pesel("96032687885", "03241311845")
+        assert_that(self.temp.find_student_by_pesel("03241311845")).is_none()
+
+    def test_register_change_student_pesel_already_exists(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.add_student("Jan", "Nowak", "03241311845")
+        assert_that(self.temp.change_student_pesel).raises(ValueError).when_called_with("96032687885", "03241311845")
 
 
     def tearDown(self):
