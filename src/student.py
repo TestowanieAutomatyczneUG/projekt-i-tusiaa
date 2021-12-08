@@ -6,11 +6,11 @@ class student:
         if type(Pesel) is int:
             Pesel = str(Pesel)
         if not pesel(Pesel):
-            raise ValueError("PESEL musi być poprawny")
+            raise ValueError("Pesel must be valid")
         if not name or type(name) != str:
-            raise ValueError("Imię musi być napisem")
+            raise ValueError("Name must be string")
         if not surname or type(surname) != str:
-            raise ValueError("Nazwisko musi być napisem")
+            raise ValueError("Surname must be string")
 
         self.name = name
         self.surname = surname
@@ -35,36 +35,36 @@ class student:
 
     def set_name(self, name: str):
         if not name or type(name) is not str:
-            raise ValueError("Imię musi być napisem")
+            raise ValueError("Name must be string")
         self.name = name
 
     def set_surname(self, surname: str):
         if not surname or type(surname) is not str:
-            raise ValueError("Nazwisko musi być napisem")
+            raise ValueError("Surname must be string")
         self.surname = surname
     
     def set_pesel(self, Pesel: str):
         if type(Pesel) is int:
             Pesel = str(Pesel)
         if not pesel(Pesel):
-            raise ValueError("PESEL musi być poprawny")
+            raise ValueError("Pesel must be valid")
         self.pesel = Pesel
 
     def add_remark(self, remark: str):
         if not remark or type(remark) is not str:
-            raise ValueError("Uwaga musi być napisem")
+            raise ValueError("Remark must be string")
         self.remarks.append(remark)
 
     def delete_remark(self, remark: str):
         if not remark or type(remark) is not str:
-            raise ValueError("Uwaga musi być napisem")
+            raise ValueError("Remark must be string")
         self.remarks.remove(remark)
 
     def change_remark(self, old_remark: str, new_remark: str):
         if not old_remark or type(old_remark) is not str:
-            raise ValueError("Uwaga musi być napisem")
+            raise ValueError("Remark must be string")
         if not new_remark or type(new_remark) is not str:
-            raise ValueError("Uwaga musi być napisem")
+            raise ValueError("Remark must be string")
         if old_remark in self.remarks:
             self.remarks[self.remarks.index(old_remark)] = new_remark
         
