@@ -192,17 +192,16 @@ class StudentTest(unittest.TestCase):
 
     def test_student_mean_from_file(self):
       fileTest = open("data/Subjects_Sample")
-      fileTest.read()
       for line in fileTest:
         if line.startswith("#") or line.startswith(" ") or line.startswith("\n"):
             continue
         else:
             data = line.split(" ")
-            if not data[0].isdigit:
-                Subject = subject(data[0])
+            if not data[0].isdigit():
+                Subject = subject(data[0].strip("\n"))
                 self.temp.add_subject(Subject)
-            elif data[1] is not None:
-                self.temp.find_subject(Subject).add_grade(grade(data[0], data[1].strip("\n")))
+            elif len(data) == 2:
+                self.temp.find_subject(Subject.get_name()).add_grade(grade(data[0], data[1].strip("\n")))
             else:
                 mean = data[0].strip("\n")
                 assert_that(self.temp.mean(), close_to(float(mean), 0.1))

@@ -126,13 +126,12 @@ class SubjectTest(unittest.TestCase):
 
     def test_subject_mean_from_file(self):
       fileTest = open("data/Grades_Sample")
-      fileTest.read()
       for line in fileTest:
         if line.startswith("#") or line.startswith(" ") or line.startswith("\n"):
             continue
         else:
             data = line.split(" ")
-            if data[1] is not None:
+            if len(data) == 2:
                 self.temp.add_grade(grade(data[0], data[1].strip("\n")))
             else:
                 mean = data[0].strip("\n")
