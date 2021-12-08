@@ -120,17 +120,17 @@ class TestRegister(unittest.TestCase):
         Student = student("Jan", "Kowalski", "96032687885")
         self.temp.add_student(Student)
         self.temp.delete_student(Student)
-        assert_that(self.temp.get_students).is_empty()
+        assert_that(self.temp.get_students()).is_empty()
 
     def test_register_delete_student_by_object_not_found(self):
         Student = student("Jan", "Kowalski", "96032687885")
         self.temp.delete_student(Student)
-        assert_that(self.temp.get_students).is_empty()
+        assert_that(self.temp.get_students()).is_empty()
 
     def test_register_get_students(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
         self.temp.add_student("Jan", "Kowalski", "94071449639")
-        assert_that(self.temp.get_students).is_length(2)
+        assert_that(self.temp.get_students()).is_length(2)
 
     def test_register_find_student_by_pesel(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
