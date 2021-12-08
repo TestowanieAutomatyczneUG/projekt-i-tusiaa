@@ -32,5 +32,22 @@ class student:
 
     def get_remarks(self):
         return self.remarks
+
+    def set_name(self, name: str):
+        if not name or type(name) is not str:
+            raise ValueError("Imię musi być napisem")
+        self.name = name
+
+    def set_surname(self, surname: str):
+        if not surname or type(surname) is not str:
+            raise ValueError("Nazwisko musi być napisem")
+        self.surname = surname
+    
+    def set_pesel(self, Pesel: str):
+        if type(Pesel) is int:
+            Pesel = str(Pesel)
+        if not pesel(Pesel):
+            raise ValueError("PESEL musi być poprawny")
+        self.pesel = Pesel
         
         
