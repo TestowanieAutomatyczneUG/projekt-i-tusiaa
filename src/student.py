@@ -2,7 +2,7 @@ from src.subject import *
 from src.Pesel_matcher import pesel
 
 class student:
-    def __init__(self, name: str, surname: str, Pesel: str) -> None:
+    def __init__(self, name: str, surname: str, Pesel: str):
         if type(Pesel) is int:
             Pesel = str(Pesel)
         if not pesel(Pesel):
@@ -17,5 +17,20 @@ class student:
         self.pesel = Pesel
         self.subjects = []
         self.remarks = []
+
+    def get_name(self):
+        return self.name
+
+    def get_surname(self):
+        return self.surname
+
+    def get_pesel(self):
+        return self.pesel
+
+    def get_subjects(self):
+        return self.subjects
+
+    def get_remarks(self):
+        return self.remarks
         
         
