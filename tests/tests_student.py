@@ -65,6 +65,7 @@ class StudentTest(unittest.TestCase):
         ("", ValueError),
         ("123456789", ValueError),
         ("96032687886", ValueError),
+        ("96033687884", ValueError),
         ("12345678910", ValueError),
         (96032687886, ValueError),
         (9603.2687885, ValueError),
@@ -111,6 +112,7 @@ class StudentTest(unittest.TestCase):
         ("", ValueError),
         ("123456789", ValueError),
         ("96032687886", ValueError),
+        ("96033687884", ValueError),
         ("12345678910", ValueError),
         (96032687886, ValueError),
         (9603.2687885, ValueError),
@@ -153,9 +155,13 @@ class StudentTest(unittest.TestCase):
         self.temp.add_subject("Matematyka")
         assert_that(self.temp.find_subject("Matematyka"), not_none())
 
-    def test_student_add_subject_already_exists(self):
+    def test_student_add_subject_already_exists_by_name(self):
         self.temp.add_subject("Matematyka")
         assert_that(calling(self.temp.add_subject).with_args("Matematyka"), raises(ValueError))
+
+    def test_student_add_subject_already_exists_by_subject(self):
+        self.temp.add_subject("Matematyka")
+        assert_that(calling(self.temp.add_subject).with_args(subject("Matematyka")), raises(ValueError))
 
     def test_student_add_subject_already_exists_small_big_letters(self):
         self.temp.add_subject("Matematyka")
