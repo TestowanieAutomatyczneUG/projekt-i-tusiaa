@@ -58,7 +58,8 @@ class student:
     def delete_remark(self, remark: str):
         if not remark or type(remark) is not str:
             raise ValueError("Remark must be string")
-        self.remarks.remove(remark)
+        if remark in self.remarks:
+            self.remarks.remove(remark)
 
     def change_remark(self, old_remark: str, new_remark: str):
         if not old_remark or type(old_remark) is not str:
@@ -67,5 +68,44 @@ class student:
             raise ValueError("Remark must be string")
         if old_remark in self.remarks:
             self.remarks[self.remarks.index(old_remark)] = new_remark
-        
+
+    def add_subject(self, Subject: subject):
+        if type(Subject) is not subject and not (type(Subject) is str and Subject):
+            raise ValueError("Subject must be a subject or string")
+
+        if type(Subject) is str:
+            Subject = Subject.capitalize()
+            if self.find_subject(Subject):
+                raise ValueError("Subject already exists")
+            self.subjects.append(subject(Subject))
+
+        if type(Subject) is subject:
+            Subject.set_name(Subject.get_name().capitalize())
+            if self.find_subject(Subject.get_name()):
+                raise ValueError("Subject already exists")
+            self.subjects.append(Subject)
+
+    def delete_subject(self, Subject: subject):
+        if type(Subject) is not subject and not (type(Subject) is str and Subject):
+            raise ValueError("Subject must be a subject or string")
+
+        if type(Subject) is str:
+            Subject = Subject.capitalize()
+            if self.find_subject(Subject):
+                self.subjects.remove(self.find_subject(Subject))
+
+        if type(Subject) is subject:
+            Subject.set_name(Subject.get_name().capitalize())
+            if self.find_subject(Subject.get_name()):
+                self.subjects.remove(self.find_subject(Subject.get_name()))
+
+    def find_subject(self, Subject: str):
+        if not Subject or type(Subject) is not str:
+            raise ValueError("Subject must be string")
+        Subject = Subject.capitalize()
+        for sub in self.subjects:
+            if sub.get_name() == Subject:
+                return sub
+        return None
+
         
