@@ -63,7 +63,8 @@ class RegisterParamerizedTest2(unittest.TestCase):
     def test_register_find_student_by_pesel_wrong(self):
         assert_that(self.temp.find_student_by_pesel).raises(self.error).when_called_with(self.value)
 
-
+    def test_register_delete_student_wrong(self):
+        assert_that(self.temp.delete_student).raises(self.error).when_called_with(self.value)
 
     def tearDown(self):
         del self.temp
@@ -87,6 +88,26 @@ class TestRegister(unittest.TestCase):
     def test_register_add_student_already_exists(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
         assert_that(self.temp.add_student).raises(ValueError).when_called_with("Jan", "Kowalski", "96032687885")
+
+    def test_register_delete_student_by_pesel(self):
+        self.temp.add_student("Jan", "Kowalski", "94071449639")
+        self.temp.delete_student("94071449639")
+        assert_that(self.temp.find_student_by_pesel("94071449639")).is_none()
+
+    def test_register_delete_student_by_pesel_not_found(self):
+        self.temp.delete_student("94071449639")
+        assert_that(self.temp.find_student_by_pesel("94071449639")).is_none()
+
+    def test_register_delete_student_by_object(self):
+        Student = student("Jan", "Kowalski", "96032687885")
+        self.temp.add_student(Student)
+        self.temp.delete_student(Student)
+        assert_that(self.temp.get_students).is_empty()
+
+    def test_register_delete_student_by_object_not_found(self):
+        Student = student("Jan", "Kowalski", "96032687885")
+        self.temp.delete_student(Student)
+        assert_that(self.temp.get_students).is_empty()
 
     def test_register_get_students(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
