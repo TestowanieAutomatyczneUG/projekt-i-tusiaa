@@ -202,3 +202,4 @@ class StudentTest(unittest.TestCase):
     
     def tearDown(self):
         del self.temp
+        
