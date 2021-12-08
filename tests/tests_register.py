@@ -50,6 +50,9 @@ class RegisterParamerizedTest2(unittest.TestCase):
     def test_register_add_student_wrong_object(self):
         assert_that(self.temp.add_student).raises(self.error).when_called_with(self.value)
 
+    def test_register_find_student_by_pesel_wrong(self):
+        assert_that(self.temp.find_student_by_pesel).raises(self.error).when_called_with(self.value)
+
 
 
     def tearDown(self):
@@ -79,6 +82,13 @@ class TestRegister(unittest.TestCase):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
         self.temp.add_student("Jan", "Kowalski", "94071449639")
         assert_that(self.temp.get_students).is_length(2)
+
+    def test_register_find_student_by_pesel(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        assert_that(self.temp.find_student_by_pesel("96032687885")).is_instance_of(student)
+
+    def test_register_find_student_by_pesel_not_found(self):
+        assert_that(self.temp.find_student_by_pesel("94071449639")).is_none()
 
 
 
