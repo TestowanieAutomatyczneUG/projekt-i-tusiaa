@@ -4,6 +4,9 @@ class register:
     def __init__(self):
         self.students = []
 
+    def get_students(self):
+        return self.students
+
     def add_student(self, name: str, surname: str = None, pesel: str = None):
         if surname is None and type(name) is student:
             if self.find_by_pesel(name.pesel) is not None:
