@@ -50,7 +50,7 @@ class RegisterParamerizedTest2(unittest.TestCase):
     def test_register_add_student_wrong_object(self):
         assert_that(self.temp.add_student).raises(self.error).when_called_with(self.value)
 
-        
+
 
     def tearDown(self):
         del self.temp
@@ -70,6 +70,15 @@ class TestRegister(unittest.TestCase):
         Student = student("Jan", "Kowalski", "96032687885")
         self.temp.add_student(Student)
         assert_that(self.temp.get_students).contains(Student)
+
+    def test_register_add_student_already_exists(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        assert_that(self.temp.add_student).raises(ValueError).when_called_with("Jan", "Kowalski", "96032687885")
+
+    def test_register_get_students(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.add_student("Jan", "Kowalski", "94071449639")
+        assert_that(self.temp.get_students).is_length(2)
 
 
 
