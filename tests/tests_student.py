@@ -151,7 +151,7 @@ class StudentTest(unittest.TestCase):
 
     def test_student_add_subject_by_name(self):
         self.temp.add_subject("Matematyka")
-        assert_that(calling(self.temp.find_subject).with_args("Matematyka"), not_none())
+        assert_that(self.temp.find_subject("Matematyka"), not_none())
 
     def test_student_add_subject_already_exists(self):
         self.temp.add_subject("Matematyka")
@@ -165,24 +165,24 @@ class StudentTest(unittest.TestCase):
         Subject= subject("Matematyka")
         self.temp.add_subject(Subject)
         self.temp.delete_subject(Subject)
-        assert_that(Subject, is_in(self.temp.get_subjects()))
+        assert_that(Subject, is_not(is_in(self.temp.get_subjects())))
 
     def test_student_delete_subject_by_name(self):
         self.temp.add_subject("Matematyka")
         self.temp.delete_subject("Matematyka")
-        assert_that(calling(self.temp.find_subject).with_args("Matematyka"), none())
+        assert_that(self.temp.find_subject("Matematyka"), none())
 
     def test_student_delete_subject_do_not_exists(self):
         Subject= subject("Matematyka")
         self.temp.delete_subject(Subject)
-        assert_that(calling(self.temp.find_subject).with_args("Matematyka"), none())
+        assert_that(self.temp.find_subject("Matematyka"), none())
 
     def test_student_find_subject(self):
         self.temp.add_subject("Matematyka")
         assert_that(self.temp.find_subject("Matematyka"), instance_of(subject))
 
     def test_student_find_subject_do_not_exists(self):
-        assert_that(calling(self.temp.find_subject).with_args("Matematyka"), none())
+        assert_that(self.temp.find_subject("Matematyka"), none())
 
     def test_student_mean_from_file(self):
       fileTest = open("data/Subjects_Sample")
