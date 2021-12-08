@@ -35,9 +35,12 @@ class StudentParamerizedTest1(unittest.TestCase):
     def test_student_delete_remark_wrong(self):
         assert_that(calling(self.temp.delete_remark).with_args(self.value), raises(self.error))
 
-    def test_student_change_remark_wrong(self):
+    def test_student_change_remark_wrong_new_remark(self):
         self.temp.add_remark("Test")
-        assert_that(calling(self.temp.change_remark).with_args(self.value), raises(self.error))    
+        assert_that(calling(self.temp.change_remark).with_args("Test", self.value), raises(self.error))    
+    
+    def test_student_change_remark_wrong_old_remark(self):
+        assert_that(calling(self.temp.change_remark).with_args(self.value, "Test"), raises(self.error))
 
     def test_student_add_subject_wrong(self):
         assert_that(calling(self.temp.add_subject).with_args(self.value), raises(self.error))
