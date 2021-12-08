@@ -108,4 +108,15 @@ class student:
                 return sub
         return None
 
+    def mean(self):
+        sum = 0
+        subjects = 0
+        for sub in self.subjects:
+            if sub.mean() != 0:
+                sum += sub.mean()
+                subjects += 1
+        if subjects != 0:
+            return sum / subjects
+        return 0
+
         
