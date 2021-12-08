@@ -126,7 +126,7 @@ class StudentTest(unittest.TestCase):
     def test_student_delete_remark(self):
         self.temp.add_remark("Test")
         self.temp.delete_remark("Test")
-        assert_that(self.temp.get_remarks(), not(contains("Test")))
+        assert_that(self.temp.get_remarks(), is_not(contains("Test")))
 
     def test_student_delete_remark_without_remark(self):
         self.temp.delete_remark("Test")
@@ -139,7 +139,7 @@ class StudentTest(unittest.TestCase):
 
     def test_student_change_remark_without_remark(self):
         self.temp.change_remark("Test", "Test2")
-        assert_that(self.temp.get_remarks(), not(contains("Test")))
+        assert_that(self.temp.get_remarks(), is_not(contains("Test")))
 
     def test_student_add_subject(self):
         Subject= subject("Matematyka")
