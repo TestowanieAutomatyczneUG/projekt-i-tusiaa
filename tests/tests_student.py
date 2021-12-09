@@ -197,7 +197,7 @@ class StudentTest(unittest.TestCase):
             continue
         else:
             data = line.split(" ")
-            if not data[0].isdigit():
+            if not data[0].strip("\n").replace('.','',1).isdigit():
                 Subject = subject(data[0].strip("\n"))
                 self.temp.add_subject(Subject)
             elif len(data) == 2:
