@@ -18,11 +18,16 @@ class register:
             self.students.append(student(name, surname, pesel))
 
     def delete_student(self, Pesel: str):
-        if not pesel(Pesel):
-            raise ValueError("Invalid pesel")
-        for student in self.students:
-            if student.pesel == Pesel:
-                self.students.remove(student)
+        if type(Pesel) is student:
+            for Student in self.students:
+                if Student.pesel == Pesel.pesel and Student.name == Pesel.name and Student.surname == Pesel.surname:
+                    self.students.remove(Student)
+        else:
+            if not pesel(Pesel):
+                raise ValueError("Invalid pesel")
+            for Student in self.students:
+                if Student.pesel == Pesel:
+                    self.students.remove(Student)
 
     def find_by_pesel(self, Pesel: str):
         if not pesel(Pesel):
