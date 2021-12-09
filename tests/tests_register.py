@@ -96,12 +96,12 @@ class TestRegister(unittest.TestCase):
 
     def test_register_add_student_by_data(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
-        assert_that(self.temp.get_students).is_length(1)
+        assert_that(self.temp.get_students()).is_length(1)
 
     def test_register_add_student_by_object(self):
         Student = student("Jan", "Kowalski", "96032687885")
         self.temp.add_student(Student)
-        assert_that(self.temp.get_students).contains(Student)
+        assert_that(self.temp.get_students()).contains(Student)
 
     def test_register_add_student_already_exists(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
