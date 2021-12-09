@@ -59,3 +59,27 @@ class register:
             if student.name == name and student.surname == surname:
                 students.append(student)
         return students
+
+    def change_student_name(self, Pesel: str, name: str):
+        if not pesel(Pesel):
+            raise ValueError("Invalid pesel")
+        if not name or type(name) is not str:
+            raise ValueError("Invalid name")
+        if self.find_by_pesel(Pesel):
+            self.find_by_pesel(Pesel).set_name(name) 
+
+    def change_student_surname(self, Pesel: str, surname: str):
+        if not pesel(Pesel):
+            raise ValueError("Invalid pesel")
+        if not surname or type(surname) is not str:
+            raise ValueError("Invalid surname")
+        if self.find_by_pesel(Pesel):
+            self.find_by_pesel(Pesel).set_surname(surname)
+
+    def change_student_pesel(self, old_pesel: str, new_pesel: str):
+        if not pesel(old_pesel) or not pesel(new_pesel):
+            raise ValueError("Invalid pesel")
+        if self.find_by_pesel(new_pesel):
+            raise ValueError("Student already exists")
+        if self.find_by_pesel(old_pesel):
+            self.find_by_pesel(old_pesel).set_pesel(new_pesel)
