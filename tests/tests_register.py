@@ -103,9 +103,14 @@ class TestRegister(unittest.TestCase):
         self.temp.add_student(Student)
         assert_that(self.temp.get_students()).contains(Student)
 
-    def test_register_add_student_already_exists(self):
+    def test_register_add_student_by_data_already_exists(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
         assert_that(self.temp.add_student).raises(ValueError).when_called_with("Jan", "Kowalski", "96032687885")
+
+    def test_register_add_student_by_object_already_exists(self):
+        Student = student("Jan", "Kowalski", "96032687885")
+        self.temp.add_student(Student)
+        assert_that(self.temp.add_student).raises(ValueError).when_called_with(Student)
 
     def test_register_delete_student_by_pesel(self):
         self.temp.add_student("Jan", "Kowalski", "94071449639")
