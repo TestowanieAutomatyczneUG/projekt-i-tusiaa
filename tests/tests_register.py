@@ -1,4 +1,5 @@
 import unittest
+import os.path
 from parameterized import parameterized_class
 from assertpy import assert_that
 from src.register import *
@@ -39,6 +40,18 @@ class RegisterParamerizedTest1(unittest.TestCase):
 
     def test_register_change_student_surname_wrong_surname(self):
         assert_that(self.temp.change_student_surname).raises(self.error).when_called_with("96032687885", self.value)
+
+    def test_register_import_students_wrong_file(self):
+        assert_that(self.temp.import_students).raises(self.error).when_called_with(self.value)
+
+    def test_register_export_students_wrong_file(self):
+        assert_that(self.temp.export_students).raises(self.error).when_called_with(self.value)
+
+    def test_register_import_remarks_wrong_file(self):
+        assert_that(self.temp.import_remarks).raises(self.error).when_called_with(self.value)
+
+    def test_register_export_remarks_wrong_file(self):
+        assert_that(self.temp.export_remarks).raises(self.error).when_called_with(self.value)
 
     def tearDown(self):
         del self.temp
@@ -202,6 +215,33 @@ class TestRegister(unittest.TestCase):
         self.temp.add_student("Jan", "Nowak", "03241311845")
         assert_that(self.temp.change_student_pesel).raises(ValueError).when_called_with("96032687885", "03241311845")
 
+    def test_register_import_students_from_file(self):
+        self.temp.import_students("data/Students_Import.csv")
+        assert_that(self.temp.get_students()).is_length(3)
+
+    def test_register_import_students_from_file_not_found(self):
+        assert_that(self.temp.import_students).raises(ValueError).when_called_with("students.csv")
+
+    def test_register_export_students_to_file(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.find_by_pesel("96032687885").add_subject("Matematyka")
+        self.temp.find_by_pesel("96032687885").find_subject("Matematyka").add_grade(grade(5, 5))
+        self.temp.export_students("data/Students_Export.csv")
+        assert_that(os.path.isfile("data/Students_Export.csv")).is_true()
+
+    def test_register_import_remarks_from_file(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.import_remarks("data/Remarks_Import.csv")
+        assert_that(self.temp.find_by_pesel("96032687885").get_remarks()).is_length(3)
+
+    def test_register_import_remarks_from_file_not_found(self):
+        assert_that(self.temp.import_remarks).raises(ValueError).when_called_with("remarks.csv")
+
+    def test_register_export_remarks_to_file(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.find_by_pesel("96032687885").add_remark("Zaliczenie")
+        self.temp.export_remarks("data/Remarks_Export.csv")
+        assert_that(os.path.isfile("data/Remarks_Export.csv")).is_true()
 
     def tearDown(self):
         del self.temp
