@@ -113,22 +113,20 @@ class register:
     def export_students(self, file: str):
         if not file or type(file) is not str:
             raise ValueError("Invalid file path")
-        try:
-            with open(file, "w") as csv_file:
-                writer = csv.writer(csv_file, delimiter=",")
-                writer.writerow(["Pesel", "Name", "Surname", "Subject", "Grade", "Scale"])
-                for student in self.students:
-                    if student.get_subjects():
-                        for subject in student.get_subjects():
-                            if subject.get_grades():
-                                for grade in subject.get_grades():
-                                    writer.writerow([student.pesel, student.name, student.surname, subject.name, grade.grade, grade.scale])
-                            else:
-                                writer.writerow([student.pesel, student.name, student.surname, subject.name])
-                    else:
-                        writer.writerow([student.pesel, student.name, student.surname])
-        except FileNotFoundError:
-            raise FileNotFoundError("File not found")
+        with open(file, "w") as csv_file:
+            writer = csv.writer(csv_file, delimiter=",")
+            writer.writerow(["Pesel", "Name", "Surname", "Subject", "Grade", "Scale"])
+            for student in self.students:
+                if student.get_subjects():
+                    for subject in student.get_subjects():
+                        if subject.get_grades():
+                            for grade in subject.get_grades():
+                                writer.writerow([student.pesel, student.name, student.surname, subject.name, grade.grade, grade.scale])
+                        else:
+                            writer.writerow([student.pesel, student.name, student.surname, subject.name])
+                else:
+                    writer.writerow([student.pesel, student.name, student.surname])
+
 
     def import_remarks(self, file):
         if not file or type(file) is not str:
@@ -147,13 +145,11 @@ class register:
     def export_remarks(self, file):
         if not file or type(file) is not str:
             raise ValueError("Invalid file path")
-        try:
-            with open(file, "w") as csv_file:
-                writer = csv.writer(csv_file, delimiter=";")
-                writer.writerow(["Pesel", "Remark"])
-                for student in self.students:
-                    if student.get_remarks():
-                        for remark in student.get_remarks():
-                            writer.writerow([student.pesel, remark])
-        except FileNotFoundError:
-            raise FileNotFoundError("File not found")
+        with open(file, "w") as csv_file:
+            writer = csv.writer(csv_file, delimiter=";")
+            writer.writerow(["Pesel", "Remark"])
+            for student in self.students:
+                if student.get_remarks():
+                    for remark in student.get_remarks():
+                        writer.writerow([student.pesel, remark])
+        
