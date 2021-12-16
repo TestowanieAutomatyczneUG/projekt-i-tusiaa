@@ -220,12 +220,15 @@ class TestRegister(unittest.TestCase):
         assert_that(self.temp.get_students()).is_length(3)
 
     def test_register_import_students_from_file_not_found(self):
-        assert_that(self.temp.import_students).raises(ValueError).when_called_with("students.csv")
+        assert_that(self.temp.import_students).raises(FileNotFoundError).when_called_with("students.csv")
 
     def test_register_export_students_to_file(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
         self.temp.find_by_pesel("96032687885").add_subject("Matematyka")
         self.temp.find_by_pesel("96032687885").find_subject("Matematyka").add_grade(grade(5, 5))
+        self.temp.find_by_pesel("96032687885").find_subject("Matematyka").add_grade(grade(1, 2))
+        self.temp.find_by_pesel("96032687885").add_subject("Informatyka")
+        self.temp.add_student("Jan", "Nowak", "03241311845")
         self.temp.export_students("data/Students_Export.csv")
         assert_that(os.path.isfile("data/Students_Export.csv")).is_true()
 
@@ -235,7 +238,7 @@ class TestRegister(unittest.TestCase):
         assert_that(self.temp.find_by_pesel("96032687885").get_remarks()).is_length(3)
 
     def test_register_import_remarks_from_file_not_found(self):
-        assert_that(self.temp.import_remarks).raises(ValueError).when_called_with("remarks.csv")
+        assert_that(self.temp.import_remarks).raises(FileNotFoundError).when_called_with("remarks.csv")
 
     def test_register_export_remarks_to_file(self):
         self.temp.add_student("Jan", "Kowalski", "96032687885")
