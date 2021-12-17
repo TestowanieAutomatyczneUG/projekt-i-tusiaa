@@ -1,5 +1,6 @@
 from src.student import *
 import csv
+import json
 
 class register:
     def __init__(self):
@@ -153,3 +154,27 @@ class register:
                     for remark in student.get_remarks():
                         writer.writerow([student.pesel, remark])
         
+    def import_from_json(self, file):
+        if not file or type(file) is not str:
+            raise ValueError("Invalid file path")
+        try:
+            with open(file, "r") as json_file:
+                data = json.load(json_file)
+                for student in data["students"]:
+                    self.add_student(student["name"], student["surname"], student["pesel"])
+                    for subject in student["subjects"]:
+                        self.find_by_pesel(student["pesel"]).add_subject(subject["name"])
+                        for Grade in subject["grades"]:
+                            self.find_by_pesel(student["pesel"]).find_subject(subject["name"]).add_grade(grade(Grade["grade"], Grade["scale"]))
+                    for remark in student["remarks"]:
+                        self.find_by_pesel(student["pesel"]).add_remark(remark)
+        except FileNotFoundError:
+            raise FileNotFoundError("File not found")
+
+    def export_to_json(self, file): 
+        if not file or type(file) is not str:
+            raise ValueError("Invalid file path")
+        with open(file, "w") as json_file:
+            data = json.dumps(self, indent=4, default=vars)
+            json_file.write(data)
+            
