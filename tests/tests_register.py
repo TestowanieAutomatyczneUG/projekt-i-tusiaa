@@ -54,10 +54,10 @@ class RegisterParamerizedTest1(unittest.TestCase):
         assert_that(self.temp.export_remarks).raises(self.error).when_called_with(self.value)
 
     def test_register_import_from_json_wrong_file(self):
-        assert_that(register.import_from_json).raises(self.error).when_called_with(self.value)
+        assert_that(self.temp.import_from_json).raises(self.error).when_called_with(self.value)
 
     def test_register_export_to_json_wrong_file(self):
-        assert_that(register.export_to_json).raises(self.error).when_called_with(self.value)
+        assert_that(self.temp.export_to_json).raises(self.error).when_called_with(self.value)
 
     def tearDown(self):
         del self.temp
@@ -266,6 +266,8 @@ class TestRegister(unittest.TestCase):
         self.temp.find_by_pesel("96032687885").find_subject("Matematyka").add_grade(grade(1, 2))
         self.temp.find_by_pesel("96032687885").add_subject("Informatyka")
         self.temp.add_student("Jan", "Nowak", "03241311845")
+        self.temp.find_by_pesel("03241311845").add_remark("Nowy")
+        self.temp.find_by_pesel("03241311845").add_remark("Zaliczenie")
         self.temp.export_to_json("data/Register_Export.json")
         assert_that(os.path.isfile("data/Register_Export.json")).is_true()
 
