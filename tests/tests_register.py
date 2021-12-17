@@ -59,6 +59,12 @@ class RegisterParamerizedTest1(unittest.TestCase):
     def test_register_export_to_json_wrong_file(self):
         assert_that(self.temp.export_to_json).raises(self.error).when_called_with(self.value)
 
+    def test_register_send_confirmation_email_wrong_email(self):
+        assert_that(self.temp.send_confirmation_email).raises(self.error).when_called_with(self.value, "Action")
+
+    def test_register_send_confirmation_email_wrong_action(self):
+        assert_that(self.temp.send_confirmation_email).raises(ValueError).when_called_with("python.test.email146@gmail.com", self.value)
+
     def tearDown(self):
         del self.temp
     
@@ -270,6 +276,9 @@ class TestRegister(unittest.TestCase):
         self.temp.find_by_pesel("03241311845").add_remark("Zaliczenie")
         self.temp.export_to_json("data/Register_Export.json")
         assert_that(os.path.isfile("data/Register_Export.json")).is_true()
+
+    def test_register_send_confirmation_email(self):
+        assert_that(self.temp.send_confirmation_email("python.test.email146@gmail.com", "Added student")).contains("success")
 
     def tearDown(self):
         del self.temp
