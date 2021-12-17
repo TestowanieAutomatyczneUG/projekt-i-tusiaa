@@ -53,6 +53,12 @@ class RegisterParamerizedTest1(unittest.TestCase):
     def test_register_export_remarks_wrong_file(self):
         assert_that(self.temp.export_remarks).raises(self.error).when_called_with(self.value)
 
+    def test_register_import_from_json_wrong_file(self):
+        assert_that(register.import_from_json).raises(self.error).when_called_with(self.value)
+
+    def test_register_export_to_json_wrong_file(self):
+        assert_that(register.export_to_json).raises(self.error).when_called_with(self.value)
+
     def tearDown(self):
         del self.temp
     
@@ -245,6 +251,23 @@ class TestRegister(unittest.TestCase):
         self.temp.find_by_pesel("96032687885").add_remark("Zaliczenie")
         self.temp.export_remarks("data/Remarks_Export.csv")
         assert_that(os.path.isfile("data/Remarks_Export.csv")).is_true()
+
+    def test_register_import_from_json(self):
+        self.temp.import_from_json("data/Register_Import.json")
+        assert_that(self.temp.get_students()).is_length(3)
+
+    def test_register_import_from_json_not_found(self):
+        assert_that(self.temp.import_from_json).raises(FileNotFoundError).when_called_with("students.json")
+
+    def test_register_export_to_json(self):
+        self.temp.add_student("Jan", "Kowalski", "96032687885")
+        self.temp.find_by_pesel("96032687885").add_subject("Matematyka")
+        self.temp.find_by_pesel("96032687885").find_subject("Matematyka").add_grade(grade(5, 5))
+        self.temp.find_by_pesel("96032687885").find_subject("Matematyka").add_grade(grade(1, 2))
+        self.temp.find_by_pesel("96032687885").add_subject("Informatyka")
+        self.temp.add_student("Jan", "Nowak", "03241311845")
+        self.temp.export_to_json("data/Register_Export.json")
+        assert_that(os.path.isfile("data/Register_Export.json")).is_true()
 
     def tearDown(self):
         del self.temp
