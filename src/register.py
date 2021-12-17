@@ -177,4 +177,29 @@ class register:
         with open(file, "w") as json_file:
             data = json.dumps(self, indent=4, default=vars)
             json_file.write(data)
-            
+
+    def send_confirmation_email(self, email: str, action: str):
+        import smtplib
+        from email.message import EmailMessage
+
+        if not email or type(email) is not str:
+            raise ValueError("Invalid email")
+        if not action or type(action) is not str:
+            raise ValueError("Invalid action")
+
+        sender = 'python.test.email146@gmail.com'
+        msg = EmailMessage()
+        msg.set_content("Hello,\nThis is a confirmation email for \"%s\" action." % action)
+
+        msg['Subject'] = 'Confirmation email'
+        msg['From'] = sender
+        msg['To'] = email
+
+        try:
+            smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+            smtp_server.login(sender, "NoweHaslo")
+            smtp_server.send_message(msg)
+            smtp_server.close()
+            return "Email sent successfully!"
+        except Exception as ex:
+            raise Exception("Something went wrong: \"%s\"" % ex)
